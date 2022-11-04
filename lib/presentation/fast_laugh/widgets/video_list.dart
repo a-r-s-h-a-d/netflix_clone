@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
-import 'package:netflix_clone/core/constants.dart';
 
 class VideoListItem extends StatelessWidget {
   const VideoListItem({
