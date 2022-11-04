@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
 const kwidth = SizedBox(width: 10);
+const kwidth20 = SizedBox(width: 20);
 const kheight = SizedBox(height: 10);
 const kheight20 = SizedBox(height: 20);
+const kheight50 = SizedBox(height: 50);
 
 //BorderRadius
 BorderRadius kBradius10 = BorderRadius.circular(10);
 BorderRadius kBradius20 = BorderRadius.circular(20);
+BorderRadius kBradius30 = BorderRadius.circular(30);
 
 //Main Image
 
