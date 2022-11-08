@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:netflix_clone/application/search/search_bloc.dart';
@@ -9,13 +10,15 @@ part 'fast_laugh_event.dart';
 part 'fast_laugh_state.dart';
 part 'fast_laugh_bloc.freezed.dart';
 
-final _videoUrl = [
-  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+final dummyvideoUrls = [
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
 ];
+
+ValueNotifier<Set<int>> likedVideosNotifier = ValueNotifier({});
 
 @Injectable()
 class FastLaughBloc extends Bloc<FastLaughEvent, FastLaughState> {
@@ -32,7 +35,7 @@ class FastLaughBloc extends Bloc<FastLaughEvent, FastLaughState> {
       //get trending movies
       final _result = await _downloadService.getDownloadsImages();
       final _state = _result.fold((l) {
-        return const FastLaughState(
+        return FastLaughState(
           videosList: [],
           isLoading: false,
           isError: true,
@@ -47,5 +50,14 @@ class FastLaughBloc extends Bloc<FastLaughEvent, FastLaughState> {
 
       emit(_state);
     });
+
+    on<LikeVideo>((event, emit) async {});
+
+    on<UnlikeVideo>(
+      (event, emit) async {
+        likedVideosNotifier.value.remove(event.id);
+        likedVideosNotifier.notifyListeners();
+      },
+    );
   }
 }
