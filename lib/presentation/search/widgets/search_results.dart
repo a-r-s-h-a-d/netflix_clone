@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/application/search/search_bloc.dart';
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presentation/search/widgets/title.dart';
-
-const imageUrl =
-    "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/2IRjbi9cADuDMKmHdLK7LaqQDKA.jpg";
 
 class SearchResultWidgets extends StatelessWidget {
   const SearchResultWidgets({super.key});
@@ -16,18 +15,23 @@ class SearchResultWidgets extends StatelessWidget {
         const SearchTextTitle(title: 'Movies & Tv'),
         kheight,
         Expanded(
-          child: GridView.count(
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 1 / 1.4,
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            children: List.generate(
-              30,
-              (index) {
-                return const MainCard();
-              },
-            ),
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return GridView.count(
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 1 / 1.4,
+                shrinkWrap: true,
+                crossAxisCount: 3,
+                children: List.generate(
+                  state.searchResultList.length,
+                  (index) {
+                    final movie = state.searchResultList[index];
+                    return MainCard(imageUrl: movie.posterImageUrl);
+                  },
+                ),
+              );
+            },
           ),
         )
       ],
@@ -36,13 +40,14 @@ class SearchResultWidgets extends StatelessWidget {
 }
 
 class MainCard extends StatelessWidget {
-  const MainCard({super.key});
+  final String imageUrl;
+  const MainCard({required this.imageUrl, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        image: const DecorationImage(
+        image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(imageUrl),
         ),

@@ -24,6 +24,9 @@ class SearchImpl implements SearchService {
       } else {
         return const Left(MainFailure.serverFailure());
       }
+    } on DioError catch (e) {
+      log(e.toString());
+      return const Left(MainFailure.clientFailure());
     } catch (e) {
       log(e.toString());
       return const Left(MainFailure.clientFailure());
