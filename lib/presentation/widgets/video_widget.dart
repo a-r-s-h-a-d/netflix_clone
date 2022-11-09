@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 
 class VideoWidget extends StatelessWidget {
+  final String? url;
   const VideoWidget({
+    required this.url,
     Key? key,
   }) : super(key: key);
 
@@ -10,13 +12,13 @@ class VideoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const SizedBox(
-          width: double.infinity,
-          height: 200,
-          child: Image(
-              image: NetworkImage(
-                  'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/jBJWaqoSCiARWtfV0GlqHrcdidd.jpg')),
-        ),
+        SizedBox(
+            width: double.infinity,
+            height: 250,
+            child: Image.network(
+              url.toString(),
+              fit: BoxFit.fill,
+            )),
         Positioned(
           bottom: 10,
           right: 10,

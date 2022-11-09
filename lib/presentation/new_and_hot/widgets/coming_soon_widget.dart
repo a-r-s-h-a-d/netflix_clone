@@ -5,8 +5,20 @@ import 'package:netflix_clone/presentation/home/widgets/custom_button_widget.dar
 import 'package:netflix_clone/presentation/widgets/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
   const ComingSoonWidget({
     Key? key,
+    required this.id,
+    required this.month,
+    required this.day,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -18,14 +30,15 @@ class ComingSoonWidget extends StatelessWidget {
           width: 50,
           height: 430,
           child: Column(
-            children: const [
+            children: [
               Text(
-                'FEB',
-                style: TextStyle(fontSize: 16, color: kGreyColor),
+                month,
+                style: const TextStyle(fontSize: 16, color: kGreyColor),
               ),
               Text(
-                '11',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                day,
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -36,17 +49,20 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VideoWidget(),
+              VideoWidget(url: posterPath),
               Row(
                 children: [
-                  const Text(
-                    'The Witcher',
-                    style: TextStyle(
-                        letterSpacing: -4,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      movieName,
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                          //letterSpacing: -2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const Spacer(),
                   Row(
                     children: const [
                       CustomButtonWidget(
@@ -67,27 +83,28 @@ class ComingSoonWidget extends StatelessWidget {
                   )
                 ],
               ),
-              const Text(
-                'Coming on Friday',
-                style: TextStyle(
+              Text(
+                'Coming on $day $month',
+                style: const TextStyle(
                   color: kGreyColor,
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               kheight,
-              const Text(
-                'The Witcher',
-                style: TextStyle(
+              Text(
+                movieName,
+                style: const TextStyle(
                   letterSpacing: -1,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               kheight,
-              const Text(
-                'Geralt embraces his destiny as he protects Ciri from the forces battling for control of the Continent — and from the mysterious power she possesses.',
-                style: TextStyle(color: kGreyColor, fontSize: 11),
+              Text(
+                description,
+                style: const TextStyle(color: kGreyColor, fontSize: 11),
+                maxLines: 4,
               )
             ],
           ),
